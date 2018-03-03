@@ -73,7 +73,7 @@ export default class CalendarStrip extends Component {
 
     locale: PropTypes.object,
 
-    updateStartingWeek: PropTypes.func,
+    updateStartingDate: PropTypes.func,
   };
 
   static defaultProps = {
@@ -147,6 +147,8 @@ export default class CalendarStrip extends Component {
       weekData = {};
     let updateState = false;
 
+    console.log('got here>>>>>>>>>>>><<<<<<<<<<<')
+
     if (!this.compareDates(nextProps.selectedDate, this.props.selectedDate)) {
       updateState = true;
       selectedDate = {
@@ -168,7 +170,7 @@ export default class CalendarStrip extends Component {
     ) {
       updateState = true;
       startingDate = { startingDate: this.setLocale(moment(nextProps.startingDate))};
-      updateStartingWeek(startingDate);
+      this.props.updateStartingDate(startingDate);
       weekData = this.updateWeekData(
         startingDate.startingDate,
         this.state.selectedDate,
