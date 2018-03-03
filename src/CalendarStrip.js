@@ -147,8 +147,6 @@ export default class CalendarStrip extends Component {
       weekData = {};
     let updateState = false;
 
-    console.log('got here>>>>>>>>>>>><<<<<<<<<<<')
-
     if (!this.compareDates(nextProps.selectedDate, this.props.selectedDate)) {
       updateState = true;
       selectedDate = {
@@ -210,8 +208,6 @@ export default class CalendarStrip extends Component {
     if (nextState.selectedDate === this.state.selectedDate) {
       this.resetAnimation();
       this.animate();
-    } else if (nextState.selectedDate != this.state.selectedDate){
-      this.props.updateStartingDate(nextState.selectedDate);
     }
   }
 
@@ -282,6 +278,7 @@ export default class CalendarStrip extends Component {
     }
     let weekData = this.updateWeekData(previousWeekStartDate);
     this.setState({ startingDate: previousWeekStartDate, ...weekData });
+    updateStartingDate(nextWeekStartDate);
   }
 
   //Set startingDate to the next week
@@ -296,6 +293,7 @@ export default class CalendarStrip extends Component {
     }
     let weekData = this.updateWeekData(nextWeekStartDate);
     this.setState({ startingDate: nextWeekStartDate, ...weekData });
+    updateStartingDate(nextWeekStartDate);
   }
 
   // Set the current visible week to the selectedDate
