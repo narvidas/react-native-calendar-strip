@@ -208,9 +208,10 @@ export default class CalendarStrip extends Component {
   //Prevents animation on pressing on a date
   componentWillUpdate(nextProps, nextState) {
     if (nextState.selectedDate === this.state.selectedDate) {
-      this.props.updateStartingDate(startingDate);
       this.resetAnimation();
       this.animate();
+    } else if (nextState.selectedDate != this.state.selectedDate){
+      this.props.updateStartingDate(nextState.selectedDate);
     }
   }
 
