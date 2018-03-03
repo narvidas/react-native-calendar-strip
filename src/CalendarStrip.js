@@ -316,7 +316,7 @@ export default class CalendarStrip extends Component {
   }
 
   resetWeekToCurrent(){
-    updateWeekStart(moment());
+    this.updateWeekStart(moment());
   }
 
   // Get & update week states for the week based on the startingDate
