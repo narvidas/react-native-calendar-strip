@@ -202,13 +202,13 @@ export default class CalendarStrip extends Component {
       this.setState({ ...selectedDate, ...startingDate, ...weekData });
     }
 
-    this.props.updateStartingDate(startingDate);
   }
 
   //Only animate CalendarDays if the selectedDate is the same
   //Prevents animation on pressing on a date
   componentWillUpdate(nextProps, nextState) {
     if (nextState.selectedDate === this.state.selectedDate) {
+      this.props.updateStartingDate(startingDate);
       this.resetAnimation();
       this.animate();
     }
