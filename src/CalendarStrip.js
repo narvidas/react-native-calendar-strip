@@ -278,7 +278,7 @@ export default class CalendarStrip extends Component {
     }
     let weekData = this.updateWeekData(previousWeekStartDate);
     this.setState({ startingDate: previousWeekStartDate, ...weekData });
-    updateStartingDate(nextWeekStartDate);
+    this.props.updateStartingDate(previousWeekStartDate);
   }
 
   //Set startingDate to the next week
@@ -293,7 +293,7 @@ export default class CalendarStrip extends Component {
     }
     let weekData = this.updateWeekData(nextWeekStartDate);
     this.setState({ startingDate: nextWeekStartDate, ...weekData });
-    updateStartingDate(nextWeekStartDate);
+    this.props.updateStartingDate((nextWeekStartDate);
   }
 
   // Set the current visible week to the selectedDate
