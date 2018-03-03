@@ -170,7 +170,6 @@ export default class CalendarStrip extends Component {
     ) {
       updateState = true;
       startingDate = { startingDate: this.setLocale(moment(nextProps.startingDate))};
-      this.props.updateStartingDate(startingDate);
       weekData = this.updateWeekData(
         startingDate.startingDate,
         this.state.selectedDate,
@@ -202,6 +201,8 @@ export default class CalendarStrip extends Component {
     if (updateState) {
       this.setState({ ...selectedDate, ...startingDate, ...weekData });
     }
+
+    this.props.updateStartingDate(startingDate);
   }
 
   //Only animate CalendarDays if the selectedDate is the same
