@@ -570,7 +570,7 @@ export default class CalendarStrip extends Component {
     }
 
     let calendarHeader = this.props.showMonth && (
-      <TouchableOpacity onPress={this.resetWeekToCurrent}>
+      <TouchableOpacity onPress={()=>{this.updateWeekStart(moment())}}>
         <CalendarHeader
           calendarHeaderFormat={this.props.calendarHeaderFormat}
           calendarHeaderStyle={this.props.calendarHeaderStyle}
