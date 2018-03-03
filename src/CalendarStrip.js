@@ -317,6 +317,7 @@ export default class CalendarStrip extends Component {
 
   resetWeekToCurrent(){
     this.updateWeekStart(moment());
+    this.updateWeekData(moment().startOf('isoWeek'))
   }
 
   // Get & update week states for the week based on the startingDate
@@ -570,7 +571,7 @@ export default class CalendarStrip extends Component {
     }
 
     let calendarHeader = this.props.showMonth && (
-      <TouchableOpacity onPress={()=>{this.updateWeekStart(moment())}}>
+      <TouchableOpacity onPress={()=>{this.updateWeekData(moment().startOf('isoWeek'))}}>
         <CalendarHeader
           calendarHeaderFormat={this.props.calendarHeaderFormat}
           calendarHeaderStyle={this.props.calendarHeaderStyle}
