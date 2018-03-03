@@ -71,7 +71,9 @@ export default class CalendarStrip extends Component {
     disabledDateOpacity: PropTypes.number,
     styleWeekend: PropTypes.bool,
 
-    locale: PropTypes.object
+    locale: PropTypes.object,
+
+    updateStartingWeek: PropTypes.func,
   };
 
   static defaultProps = {
@@ -166,6 +168,7 @@ export default class CalendarStrip extends Component {
     ) {
       updateState = true;
       startingDate = { startingDate: this.setLocale(moment(nextProps.startingDate))};
+      updateStartingWeek(startingDate);
       weekData = this.updateWeekData(
         startingDate.startingDate,
         this.state.selectedDate,
