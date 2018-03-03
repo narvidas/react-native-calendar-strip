@@ -73,7 +73,6 @@ export default class CalendarStrip extends Component {
 
     locale: PropTypes.object,
 
-    updateStartingDate: PropTypes.func,
   };
 
   static defaultProps = {
@@ -278,7 +277,6 @@ export default class CalendarStrip extends Component {
     }
     let weekData = this.updateWeekData(previousWeekStartDate);
     this.setState({ startingDate: previousWeekStartDate, ...weekData });
-    this.props.updateStartingDate(previousWeekStartDate);
   }
 
   //Set startingDate to the next week
@@ -293,7 +291,6 @@ export default class CalendarStrip extends Component {
     }
     let weekData = this.updateWeekData(nextWeekStartDate);
     this.setState({ startingDate: nextWeekStartDate, ...weekData });
-    this.props.updateStartingDate(nextWeekStartDate);
   }
 
   // Set the current visible week to the selectedDate
@@ -316,6 +313,10 @@ export default class CalendarStrip extends Component {
     startingDate = originalStartDate[addOrSubtract](adjustWeeks, "w");
 
     return this.setLocale(startingDate);
+  }
+
+  resetWeekToCurrent(){
+    updateWeekStart(moment());
   }
 
   // Get & update week states for the week based on the startingDate
@@ -569,12 +570,14 @@ export default class CalendarStrip extends Component {
     }
 
     let calendarHeader = this.props.showMonth && (
-      <CalendarHeader
-        calendarHeaderFormat={this.props.calendarHeaderFormat}
-        calendarHeaderStyle={this.props.calendarHeaderStyle}
-        datesForWeek={this.state.datesForWeek}
-        fontSize={this.state.monthFontSize}
-      />
+      <TouchableOpacity onPress={resetWeekToCurrent}>
+        <CalendarHeader
+          calendarHeaderFormat={this.props.calendarHeaderFormat}
+          calendarHeaderStyle={this.props.calendarHeaderStyle}
+          datesForWeek={this.state.datesForWeek}
+          fontSize={this.state.monthFontSize}
+        />
+      </TouchableOpacity>
     );
 
     // calendarHeader renders above the dates & left/right selectors if dates are shown.
