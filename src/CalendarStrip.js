@@ -4,7 +4,7 @@
 
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View, Animated, Easing } from "react-native";
+import { View, Animated, Easing, TouchableOpacity } from "react-native";
 
 import moment from "moment";
 
