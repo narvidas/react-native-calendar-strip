@@ -194,7 +194,6 @@ export default class CalendarDay extends Component {
     };
 
     return (
-      <TouchableOpacity>
         <View
           key={this.props.date}
           style={[
@@ -221,7 +220,6 @@ export default class CalendarDay extends Component {
             </Text>
           )}
         </View>
-      </TouchableOpacity>
     );
   }
 }
