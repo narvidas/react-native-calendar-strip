@@ -33,6 +33,7 @@ export default class CalendarStrip extends Component {
     maxDate: PropTypes.any,
     datesWhitelist: PropTypes.array,
     datesBlacklist: PropTypes.array,
+    onToday: PropTypes.func,
 
     showMonth: PropTypes.bool,
     showDayName: PropTypes.bool,
@@ -132,6 +133,7 @@ export default class CalendarStrip extends Component {
     this.isDateSelected = this.isDateSelected.bind(this);
     this.animate = this.animate.bind(this);
     this.resetAnimation = this.resetAnimation.bind(this);
+    this.resetWeekToCurrent = this.resetWeekToCurrent.bind(this);
   }
 
   componentDidMount() {
@@ -318,6 +320,8 @@ export default class CalendarStrip extends Component {
   resetWeekToCurrent(){
     this.updateWeekStart(moment());
     this.updateWeekData(moment().startOf('isoWeek'))
+    this.props.onToday && this.props.onToday();
+    this.forceUpdate();
   }
 
   // Get & update week states for the week based on the startingDate
@@ -571,7 +575,7 @@ export default class CalendarStrip extends Component {
     }
 
     let calendarHeader = this.props.showMonth && (
-      <TouchableOpacity onPress={()=>{this.updateWeekData(moment().startOf('isoWeek'))}}>
+      <TouchableOpacity onPress={()=>{this.resetWeekToCurrent()}}>
         <CalendarHeader
           calendarHeaderFormat={this.props.calendarHeaderFormat}
           calendarHeaderStyle={this.props.calendarHeaderStyle}
