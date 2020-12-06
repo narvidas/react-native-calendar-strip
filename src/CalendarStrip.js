@@ -2,16 +2,14 @@
  * Created by bogdanbegovic on 8/20/16.
  */
 
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { View, Animated, Easing, TouchableOpacity } from "react-native";
-
 import moment from "moment";
-
-import CalendarHeader from "./CalendarHeader";
-import CalendarDay from "./CalendarDay";
-import WeekSelector from "./WeekSelector";
+import PropTypes from "prop-types";
+import React, { Component } from "react";
+import { Animated, Easing, TouchableOpacity, View } from "react-native";
 import styles from "./Calendar.style.js";
+import CalendarDay from "./CalendarDay";
+import CalendarHeader from "./CalendarHeader";
+import WeekSelector from "./WeekSelector";
 
 /*
  * Class CalendarStrip that is representing the whole calendar strip and contains CalendarDay elements
@@ -73,7 +71,6 @@ export default class CalendarStrip extends Component {
     styleWeekend: PropTypes.bool,
 
     locale: PropTypes.object,
-
   };
 
   static defaultProps = {
@@ -91,7 +88,7 @@ export default class CalendarStrip extends Component {
     responsiveSizingOffset: 0,
     innerStyle: { flex: 1 },
     maxDayComponentSize: 80,
-    minDayComponentSize: 10
+    minDayComponentSize: 10,
   };
 
   constructor(props) {
@@ -119,7 +116,7 @@ export default class CalendarStrip extends Component {
       dayComponentWidth: 0,
       height: 0,
       monthFontSize: 0,
-      selectorSize: 0
+      selectorSize: 0,
     };
 
     this.resetAnimation();
@@ -151,10 +148,10 @@ export default class CalendarStrip extends Component {
     if (!this.compareDates(nextProps.selectedDate, this.props.selectedDate)) {
       updateState = true;
       selectedDate = {
-        selectedDate: this.setLocale(moment(nextProps.selectedDate))
+        selectedDate: this.setLocale(moment(nextProps.selectedDate)),
       };
       startingDate = {
-        startingDate: this.updateWeekStart(selectedDate.selectedDate)
+        startingDate: this.updateWeekStart(selectedDate.selectedDate),
       };
       weekData = this.updateWeekData(
         startingDate.startingDate,
@@ -168,7 +165,9 @@ export default class CalendarStrip extends Component {
       !this.compareDates(nextProps.startingDate, this.props.startingDate)
     ) {
       updateState = true;
-      startingDate = { startingDate: this.setLocale(moment(nextProps.startingDate))};
+      startingDate = {
+        startingDate: this.setLocale(moment(nextProps.startingDate)),
+      };
       weekData = this.updateWeekData(
         startingDate.startingDate,
         this.state.selectedDate,
@@ -188,7 +187,7 @@ export default class CalendarStrip extends Component {
       updateState = true;
       // No need to update week start here
       startingDate = {
-        startingDate: this.updateWeekStart(nextProps.startingDate)
+        startingDate: this.updateWeekStart(nextProps.startingDate),
       };
       weekData = this.updateWeekData(
         startingDate.startingDate,
@@ -200,7 +199,6 @@ export default class CalendarStrip extends Component {
     if (updateState) {
       this.setState({ ...selectedDate, ...startingDate, ...weekData });
     }
-
   }
 
   //Only animate CalendarDays if the selectedDate is the same
@@ -271,10 +269,10 @@ export default class CalendarStrip extends Component {
     if (this.props.onWeekChanged) {
       if (this.props.useIsoWeekday) {
         this.props.onWeekChanged(
-          previousWeekStartDate.clone().startOf("isoweek")
+          previousWeekStartDate.clone().startOf("isoweek").toDate()
         );
       } else {
-        this.props.onWeekChanged(previousWeekStartDate.clone());
+        this.props.onWeekChanged(previousWeekStartDate.clone().toDate());
       }
     }
     let weekData = this.updateWeekData(previousWeekStartDate);
@@ -286,9 +284,11 @@ export default class CalendarStrip extends Component {
     const nextWeekStartDate = this.state.startingDate.clone().add(1, "w");
     if (this.props.onWeekChanged) {
       if (this.props.useIsoWeekday) {
-        this.props.onWeekChanged(nextWeekStartDate.clone().startOf("isoweek"));
+        this.props.onWeekChanged(
+          nextWeekStartDate.clone().startOf("isoweek").toDate()
+        );
       } else {
-        this.props.onWeekChanged(nextWeekStartDate.clone());
+        this.props.onWeekChanged(nextWeekStartDate.clone().toDate());
       }
     }
     let weekData = this.updateWeekData(nextWeekStartDate);
@@ -317,9 +317,9 @@ export default class CalendarStrip extends Component {
     return this.setLocale(startingDate);
   }
 
-  resetWeekToCurrent(){
+  resetWeekToCurrent() {
     this.updateWeekStart(moment());
-    this.updateWeekData(moment().startOf('isoWeek'))
+    this.updateWeekData(moment().startOf("isoWeek"));
     this.props.onToday && this.props.onToday();
     this.forceUpdate();
   }
@@ -353,7 +353,7 @@ export default class CalendarStrip extends Component {
       datesForWeek,
       datesAllowedForWeek,
       datesSelectedForWeek,
-      datesCustomStylesForWeek
+      datesCustomStylesForWeek,
     };
   }
 
@@ -361,7 +361,7 @@ export default class CalendarStrip extends Component {
   onDateSelected(selectedDate) {
     this.setState({
       selectedDate,
-      ...this.updateWeekData(this.state.startingDate, selectedDate)
+      ...this.updateWeekData(this.state.startingDate, selectedDate),
     });
     this.props.onDateSelected && this.props.onDateSelected(selectedDate);
   }
@@ -469,7 +469,7 @@ export default class CalendarStrip extends Component {
           Animated.timing(this.animatedValue[i], {
             toValue: 1,
             duration: this.props.calendarAnimation.duration,
-            easing: Easing.linear
+            easing: Easing.linear,
           })
         );
       }
@@ -525,7 +525,7 @@ export default class CalendarStrip extends Component {
       dayComponentWidth,
       height,
       monthFontSize,
-      selectorSize
+      selectorSize,
     });
   }
 
@@ -575,7 +575,11 @@ export default class CalendarStrip extends Component {
     }
 
     let calendarHeader = this.props.showMonth && (
-      <TouchableOpacity onPress={()=>{this.resetWeekToCurrent()}}>
+      <TouchableOpacity
+        onPress={() => {
+          this.resetWeekToCurrent();
+        }}
+      >
         <CalendarHeader
           calendarHeaderFormat={this.props.calendarHeaderFormat}
           calendarHeaderStyle={this.props.calendarHeaderStyle}
@@ -592,7 +596,7 @@ export default class CalendarStrip extends Component {
         style={[
           styles.calendarContainer,
           { backgroundColor: this.props.calendarColor },
-          this.props.style
+          this.props.style,
         ]}
       >
         <View
