@@ -63,7 +63,7 @@ export default class CalendarDay extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    newState = {};
+    let newState = {};
     let doStateUpdate = false;
 
     if (this.state.selected !== nextProps.selected) {
